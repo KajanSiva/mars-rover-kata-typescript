@@ -1,3 +1,5 @@
+import { Planet } from './Planet';
+
 type Direction = 'N' | 'E' | 'S' | 'W';
 type Coordinates = {
   x: number;
@@ -10,10 +12,16 @@ const directions: Direction[] = ['N', 'E', 'S', 'W'];
 export class Rover {
   coordinates: Coordinates;
   direction: Direction;
+  planet: Planet;
 
-  constructor(startingCoordinates: Coordinates, direction: Direction) {
+  constructor(
+    startingCoordinates: Coordinates,
+    direction: Direction,
+    planet: Planet,
+  ) {
     this.coordinates = startingCoordinates;
     this.direction = direction;
+    this.planet = planet;
   }
 
   processCommands(commands: Command[]) {
