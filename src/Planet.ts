@@ -11,21 +11,23 @@ type Obstacle = {
 
 export class Planet {
   size: Size;
-  obstacles: Obstacle[];
+  obstacleSet = new Set();
 
   constructor(size: Size, obstacles: Obstacle[]) {
     this.size = size;
-    this.obstacles = obstacles;
+
+    obstacles.forEach((obstacle) => {
+      const hash = this.#hashCoordinates(obstacle.location);
+      this.obstacleSet.add(hash);
+    });
+  }
+
+  #hashCoordinates(coordinates: Coordinates) {
+    return `${coordinates.x}:${coordinates.y}`;
   }
 
   hasObstaclesInCoordinates(coordinates: Coordinates) {
-    const obstacleIndex = this.obstacles.findIndex((obstacle) => {
-      return (
-        obstacle.location.x === coordinates.x &&
-        obstacle.location.y === coordinates.y
-      );
-    });
-
-    return obstacleIndex !== -1;
+    const hash = this.#hashCoordinates(coordinates);
+    return this.obstacleSet.has(hash);
   }
 }

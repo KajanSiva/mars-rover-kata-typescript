@@ -142,6 +142,6 @@ describe('Planet', () => {
     const planet = new Planet(size, obstacles);
 
     expect(planet.size).toEqual(size);
-    expect(planet.obstacles).toEqual(obstacles);
+    expect(planet.obstacleSet).toEqual(new Set(['5:5', '0:3', '8:6']));
   });
 });
