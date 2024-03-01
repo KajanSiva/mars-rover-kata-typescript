@@ -1,5 +1,5 @@
 import { Planet } from './Planet';
-import { Rover } from './Rover';
+import { ObstacleEncounteredError, Rover } from './Rover';
 
 describe('Rover', () => {
   it('should create a new rover with the given coordinates, direction and planet', () => {
@@ -102,6 +102,25 @@ describe('Rover', () => {
 
     expect(rover.coordinates).toEqual({ x: 1, y: 2 });
     expect(rover.direction).toEqual('N');
+  });
+
+  it('should abort the sequence when encountering an obstacle', () => {
+    const startingCoordinates = { x: 9, y: 4 };
+    const direction = 'E';
+    const size = { x: 10, y: 20 };
+    const planet = new Planet(size, [
+      {
+        location: { x: 1, y: 3 },
+      },
+    ]);
+
+    const rover = new Rover(startingCoordinates, direction, planet);
+    expect(() =>
+      rover.processCommands(['f', 'f', 'r', 'b', 'l', 'l', 'f']),
+    ).toThrow(ObstacleEncounteredError);
+
+    expect(rover.coordinates).toEqual({ x: 1, y: 4 });
+    expect(rover.direction).toEqual('S');
   });
 });
 

@@ -9,6 +9,16 @@ type Command = 'f' | 'b' | 'l' | 'r';
 
 const directions: Direction[] = ['N', 'E', 'S', 'W'];
 
+export class ObstacleEncounteredError extends Error {
+  coordinates: Coordinates;
+
+  constructor(coordinates: Coordinates) {
+    super('Obstacle encountered');
+    this.name = 'ObstacleEncounteredError';
+    this.coordinates = coordinates;
+  }
+}
+
 export class Rover {
   coordinates: Coordinates;
   direction: Direction;
@@ -26,7 +36,14 @@ export class Rover {
 
   processCommands(commands: Command[]) {
     for (let i = 0; i < commands.length; i++) {
-      this.#processCommand(commands[i]);
+      try {
+        this.#processCommand(commands[i]);
+      } catch (error) {
+        if (error instanceof ObstacleEncounteredError) {
+          console.error(error.message, error.coordinates);
+        }
+        throw error;
+      }
     }
   }
 
@@ -83,7 +100,7 @@ export class Rover {
       yOffset = yOffset * -1;
     }
 
-    this.coordinates = {
+    const newCoordinates = {
       x:
         (this.coordinates.x + xOffset + this.planet.size.x) %
         this.planet.size.x,
@@ -91,6 +108,12 @@ export class Rover {
         (this.coordinates.y + yOffset + this.planet.size.y) %
         this.planet.size.y,
     };
+
+    if (this.planet.hasObstaclesInCoordinates(newCoordinates)) {
+      throw new ObstacleEncounteredError(newCoordinates);
+    }
+
+    this.coordinates = newCoordinates;
   }
 
   #turnLeft() {

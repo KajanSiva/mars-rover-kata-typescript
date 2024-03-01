@@ -17,4 +17,15 @@ export class Planet {
     this.size = size;
     this.obstacles = obstacles;
   }
+
+  hasObstaclesInCoordinates(coordinates: Coordinates) {
+    const obstacleIndex = this.obstacles.findIndex((obstacle) => {
+      return (
+        obstacle.location.x === coordinates.x &&
+        obstacle.location.y === coordinates.y
+      );
+    });
+
+    return obstacleIndex !== -1;
+  }
 }
