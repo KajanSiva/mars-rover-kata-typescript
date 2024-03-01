@@ -31,4 +31,26 @@ describe('Rover', () => {
 
     expect(rover.coordinates).toEqual({ x: 0, y: -1 });
   });
+
+  it('should turn the rover left', () => {
+    const startingCoordinates = { x: 0, y: 0 };
+    const direction = 'N';
+
+    const rover = new Rover(startingCoordinates, direction);
+    rover.processCommands(['l']);
+
+    expect(rover.coordinates).toEqual({ x: 0, y: 0 });
+    expect(rover.direction).toEqual('W');
+  });
+
+  it('should turn the rover right', () => {
+    const startingCoordinates = { x: 0, y: 0 };
+    const direction = 'N';
+
+    const rover = new Rover(startingCoordinates, direction);
+    rover.processCommands(['r']);
+
+    expect(rover.coordinates).toEqual({ x: 0, y: 0 });
+    expect(rover.direction).toEqual('E');
+  });
 });
