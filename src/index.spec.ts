@@ -1,4 +1,4 @@
-import { Rover } from './index';
+import { Rover } from './Rover';
 
 describe('Rover', () => {
   it('should create a new rover with the given coordinates and direction', () => {
