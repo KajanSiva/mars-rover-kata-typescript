@@ -63,10 +63,10 @@ export class Rover {
 
     switch (this.direction) {
       case 'N':
-        yOffset = 1;
+        yOffset = -1;
         break;
       case 'S':
-        yOffset = -1;
+        yOffset = 1;
         break;
       case 'E':
         xOffset = 1;
@@ -84,8 +84,12 @@ export class Rover {
     }
 
     this.coordinates = {
-      x: this.coordinates.x + xOffset,
-      y: this.coordinates.y + yOffset,
+      x:
+        (this.coordinates.x + xOffset + this.planet.size.x) %
+        this.planet.size.x,
+      y:
+        (this.coordinates.y + yOffset + this.planet.size.y) %
+        this.planet.size.y,
     };
   }
 

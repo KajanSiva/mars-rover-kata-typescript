@@ -16,7 +16,7 @@ describe('Rover', () => {
   });
 
   it('should move the rover forward', () => {
-    const startingCoordinates = { x: 0, y: 0 };
+    const startingCoordinates = { x: 0, y: 5 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
     const planet = new Planet(size);
@@ -24,7 +24,7 @@ describe('Rover', () => {
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['f']);
 
-    expect(rover.coordinates).toEqual({ x: 0, y: 1 });
+    expect(rover.coordinates).toEqual({ x: 0, y: 4 });
   });
 
   it('should move the rover backward', () => {
@@ -36,7 +36,7 @@ describe('Rover', () => {
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['b']);
 
-    expect(rover.coordinates).toEqual({ x: 0, y: -1 });
+    expect(rover.coordinates).toEqual({ x: 0, y: 1 });
   });
 
   it('should turn the rover left', () => {
@@ -62,6 +62,32 @@ describe('Rover', () => {
     rover.processCommands(['r']);
 
     expect(rover.coordinates).toEqual({ x: 0, y: 0 });
+    expect(rover.direction).toEqual('E');
+  });
+
+  it('should wrap at edges, on the y axis', () => {
+    const startingCoordinates = { x: 0, y: 0 };
+    const direction = 'N';
+    const size = { x: 10, y: 10 };
+    const planet = new Planet(size);
+
+    const rover = new Rover(startingCoordinates, direction, planet);
+    rover.processCommands(['f']);
+
+    expect(rover.coordinates).toEqual({ x: 0, y: 9 });
+    expect(rover.direction).toEqual('N');
+  });
+
+  it('should wrap at edges, on the x axis', () => {
+    const startingCoordinates = { x: 9, y: 4 };
+    const direction = 'E';
+    const size = { x: 10, y: 10 };
+    const planet = new Planet(size);
+
+    const rover = new Rover(startingCoordinates, direction, planet);
+    rover.processCommands(['f']);
+
+    expect(rover.coordinates).toEqual({ x: 0, y: 4 });
     expect(rover.direction).toEqual('E');
   });
 });
