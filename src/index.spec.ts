@@ -90,6 +90,19 @@ describe('Rover', () => {
     expect(rover.coordinates).toEqual({ x: 0, y: 4 });
     expect(rover.direction).toEqual('E');
   });
+
+  it('should process an array of commands', () => {
+    const startingCoordinates = { x: 9, y: 4 };
+    const direction = 'E';
+    const size = { x: 10, y: 20 };
+    const planet = new Planet(size);
+
+    const rover = new Rover(startingCoordinates, direction, planet);
+    rover.processCommands(['f', 'f', 'r', 'b', 'l', 'l', 'f']);
+
+    expect(rover.coordinates).toEqual({ x: 1, y: 2 });
+    expect(rover.direction).toEqual('N');
+  });
 });
 
 describe('Planet', () => {
