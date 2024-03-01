@@ -6,7 +6,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 0, y: 0 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
 
@@ -19,7 +19,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 0, y: 5 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['f']);
@@ -31,7 +31,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 0, y: 0 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['b']);
@@ -43,7 +43,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 0, y: 0 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['l']);
@@ -56,7 +56,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 0, y: 0 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['r']);
@@ -69,7 +69,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 0, y: 0 };
     const direction = 'N';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['f']);
@@ -82,7 +82,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 9, y: 4 };
     const direction = 'E';
     const size = { x: 10, y: 10 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['f']);
@@ -95,7 +95,7 @@ describe('Rover', () => {
     const startingCoordinates = { x: 9, y: 4 };
     const direction = 'E';
     const size = { x: 10, y: 20 };
-    const planet = new Planet(size);
+    const planet = new Planet(size, []);
 
     const rover = new Rover(startingCoordinates, direction, planet);
     rover.processCommands(['f', 'f', 'r', 'b', 'l', 'l', 'f']);
@@ -106,11 +106,23 @@ describe('Rover', () => {
 });
 
 describe('Planet', () => {
-  it('should create a Planet with a given size', () => {
+  it('should create a Planet with a given size and obstacles', () => {
     const size = { x: 10, y: 10 };
+    const obstacles = [
+      {
+        location: { x: 5, y: 5 },
+      },
+      {
+        location: { x: 0, y: 3 },
+      },
+      {
+        location: { x: 8, y: 6 },
+      },
+    ];
 
-    const planet = new Planet(size);
+    const planet = new Planet(size, obstacles);
 
     expect(planet.size).toEqual(size);
+    expect(planet.obstacles).toEqual(obstacles);
   });
 });

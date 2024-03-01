@@ -1,7 +1,7 @@
 import { Planet } from './Planet';
 
 type Direction = 'N' | 'E' | 'S' | 'W';
-type Coordinates = {
+export type Coordinates = {
   x: number;
   y: number;
 };
